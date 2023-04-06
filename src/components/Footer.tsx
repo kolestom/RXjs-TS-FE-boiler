@@ -1,8 +1,9 @@
 import { FC } from "react";
-import { useMessageContext } from "../contexts/messageContext";
+import { $messages } from "../states/messages";
+import useRXjs from "../hooks/useRXjx";
 
 const Footer:FC  = () => {
-    const {messages} = useMessageContext()
+    const messages = useRXjs($messages)
     const count = messages.length
     return ( 
         <footer>
