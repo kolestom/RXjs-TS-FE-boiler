@@ -6,7 +6,7 @@ type Message ={
     message:string
   }
 
-export const $messages = new BehaviorSubject<Message[]>([])  //$-lal jeloljuk, h reactive valtozo
+export const $messages = new BehaviorSubject<Message[]>([])  //$-lal jeloljuk, h reactive valtozo 
 
 export const loadData = () =>{
     $messages.next(
