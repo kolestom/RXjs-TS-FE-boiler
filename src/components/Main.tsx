@@ -2,8 +2,11 @@ import { FC, useEffect } from "react";
 import { $messages, loadData } from "../states/messages";
 import useRXjs from "../hooks/useRXjx"; 
 import { login, logout, $user } from "../states/user";
+import { Route } from "./Route";
 
-const Main:FC  = () => {
+
+
+const Main:FC = () => {
     const messages = useRXjs($messages)
     const user = useRXjs($user)
 
@@ -28,6 +31,17 @@ const Main:FC  = () => {
           {user && <p>Hello, {user.email}</p>}
           <a href={fullUrl}>Login</a>
           <button onClick={logout}>Logout</button>
+
+          <Route path="/first">
+              <div>First</div>
+          </Route>
+          <Route path="/second">
+              <div>Second</div>
+          </Route>
+          <Route path="/third">
+              <div>Third</div>
+          </Route>
+         
           <button onClick={loadData}>Load Data</button>
           {messages.map((message, i) => {
             return <div key={i}>

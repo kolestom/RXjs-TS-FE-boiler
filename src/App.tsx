@@ -7,7 +7,7 @@ import Main from './components/Main';
 
 
 function App() {
-  
+  const [page, setPage] = useState('first');
   
   
   
