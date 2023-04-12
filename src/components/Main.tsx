@@ -1,14 +1,10 @@
 import { FC, useEffect } from "react";
 import { $messages, loadData } from "../states/messages";
-import { $counter, addOne, removeOne } from "../states/count";
-import { $input, setInput } from "../states/input";
 import useRXjs from "../hooks/useRXjx"; 
 import { login, logout, $user } from "../states/user";
 
 const Main:FC  = () => {
     const messages = useRXjs($messages)
-    const counter = useRXjs($counter)
-    const input = useRXjs($input)
     const user = useRXjs($user)
 
   const url = "https://accounts.google.com/o/oauth2/v2/auth";
@@ -40,10 +36,7 @@ const Main:FC  = () => {
               <p>Message: {message.message}</p>
             </div>
            })}
-          <button onClick={addOne}>Add One</button>
-          <button onClick={removeOne}>Remove One</button>
-          <input type="text" placeholder="enter text" value={input} onChange={(e)=>setInput(e.target.value)}/>
-          <h1>{counter}</h1>
+          
         </main>
      );
 }
