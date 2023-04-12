@@ -12,6 +12,7 @@ const Footer:FC  = () => {
 
     return ( 
         <footer>
+          <div>Footer</div>
         <h3>Number of messages: {count}</h3>
         {user && <h2>Hello {user.email}</h2>}
       </footer>

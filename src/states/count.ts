@@ -7,3 +7,7 @@ export const $counter = new BehaviorSubject<number>(0)  //$-lal jeloljuk, h reac
 export const addOne = () =>{
     $counter.next($counter.value +1)
 }
+
+export const removeOne = () =>{
+    $counter.next($counter.value -1)
+}

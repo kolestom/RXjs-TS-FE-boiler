@@ -13,6 +13,7 @@ const NavBar:FC = () => { // return type not needed because of FC type
     const hasMassages = messages.length >0
     return ( 
         <nav>
+            <div>Navbar</div>
             <h3>{input}</h3>
             {hasMassages ? <h1>You have new notificatios</h1> : <h1>No messages</h1>}
         </nav>
