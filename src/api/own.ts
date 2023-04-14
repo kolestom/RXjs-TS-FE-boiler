@@ -18,3 +18,13 @@ export const login = async(code: string): Promise<string | null>=>{
         return null
     }
 }
+
+export const getSecret = async () =>{
+    const resp = await client.get('/api/secret', {
+        headers: {
+            Authorization: `Bearer: ${localStorage.getItem('token')}` 
+        }
+    })
+    console.log(resp.data);
+    
+}
