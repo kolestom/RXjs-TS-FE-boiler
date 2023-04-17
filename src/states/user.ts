@@ -2,7 +2,6 @@ import { BehaviorSubject } from "rxjs";
 import { login as requestLogin, $token, endSession } from "../api/own";
 import jwt_decode from "jwt-decode";
 import { z } from "zod";
-import { $path, navigate } from "./routes";
 
 const UserSchema = z.object({
   email: z.string(),
@@ -22,21 +21,19 @@ const decodeUser = (token: string | null): UserType | null => {
 export const $user = new BehaviorSubject<UserType | null>(decodeUser($token.getValue()));
 $token.subscribe(token => $user.next(decodeUser(token)))
 
-export const login = async (code: string): Promise<void> => {
+type Callback = {
+    onSuccess: () => any
+    onError: () => any
+}
+
+export const login = async (code: string, callback: Callback): Promise<void> => {
   const token = await requestLogin(code);
   const user = decodeUser(token);
-  if (!user) return navigate("/");
+  if (!user)
+    return callback.onError();
   $user.next(user);
-  navigate("/dashboard");
+  callback.onSuccess();
 };
-
-$path.subscribe((path) => {
-  if (path === "/callback") {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const code = urlSearchParams.get("code");
-    if (code) login(code);
-  }
-});
 
 export const logout = () => {
   endSession()
