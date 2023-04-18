@@ -4,13 +4,18 @@ import useRXjs from "../hooks/useRXjx";
 import { logout, $user } from "../states/user";
 import { fullUrl } from "../config";
 import { getSecret } from "../api/own";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { Callback } from "./Callback";
 import { Protected } from "./Route";
 
 const Main: FC = () => {
   const messages = useRXjs($messages);
   const user = useRXjs($user);
+
+  const navigate = useNavigate()
+  navigate("/", {
+    
+  })
 
   return (
     <main>

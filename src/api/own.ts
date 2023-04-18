@@ -1,21 +1,49 @@
-import axios, { Axios, AxiosError } from "axios";
+import axios, { Axios, AxiosError, AxiosResponse } from "axios";
 import { BehaviorSubject } from "rxjs";
 import { z } from "zod";
 import jwt_decode from "jwt-decode";
 
 const client = axios.create({ baseURL: "http://localhost:8000" });
 
-const get = async (path: string) => {
+type Response = { // generic type + zod
+  data: any,
+  status: number
+}
+
+const request = async <T>(method: string, path: string, payload: T): Promise<Response> => {
     try {
-      const resp = await client.get(path, {
+      client.request({
+        method,
+        url: path,
+        data: payload,
         headers: {
           Authorization: `Bearer: ${localStorage.getItem("token")}`,
         },
-      });
-      return resp.data
+      })
+      const response = await client.request({
+        method,
+        url: path,
+        data: payload,
+        headers: {
+          Authorization: `Bearer: ${localStorage.getItem("token")}`,
+        },
+      })
+      return {
+        data: response.data,
+        status: response.status
+      }
     } catch (error) {
-      if ((error as AxiosError).response?.status === 401) {
-        endSession()
+      const response = (error as AxiosError).response
+      if (response?.status === 401) endSession()
+      if (response) {
+        return {
+          data: response.data,
+          status: response.status
+        }
+      }
+      return {
+        data: null,
+        status: 0
       }
     }
   }
@@ -57,7 +85,16 @@ export const login = async (code: string): Promise<string | null> => {
 };
 
 export const getSecret = async () => {
-  const data = await get("/api/secret")
-  console.log(data);
-  
+  const response = await request("get", "/api/secret", null)
+  console.log(response.data);
+};
+
+type Todo = {
+  title: string,
+  description: string
+}
+
+export const createTodo = async (todo: Todo) => {
+  const response = await request("get", "/api/secret", todo)
+  console.log(response.data);
 };
